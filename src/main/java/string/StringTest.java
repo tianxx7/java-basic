@@ -47,4 +47,54 @@ public class StringTest {
         String s1 = "abc";
         System.out.println(s1);
     }
+
+    /*
+    * 测试String的subString方法
+    * index == 0 直接返回当前对象
+    * 其他会new String()
+    * 对于toUpperCase一样
+    * */
+    @Test
+    public void testSubString(){
+        String str1 = "123";
+        System.out.println("123" == str1.substring(0));
+        System.out.println("23" == str1.substring(1));
+    }
+
+    /*
+    * 反转字符串,string本身没有反转方法,需要StringBuilder活StringBuffer
+    * 反转操作的是原始对象的value数组,也就是原始对象字符串反转了
+    * */
+    @Test
+    public void reverseString(){
+        String s1 = "123";
+        System.out.println(new StringBuilder(s1).reverse().toString());
+        System.out.println(new StringBuffer(s1).reverse().toString());
+        System.out.println(reverse(s1));
+    }
+
+    /*
+    * 炫技能
+    * */
+    public static String reverse(String str){
+        if (str == null || str.length() <= 0) {
+            return str;
+        }
+        return reverse(new String(str.substring(1))) + str.charAt(0);
+    }
+
+    /*
+     * 检查字符串是否是回文
+     * */
+    @Test
+    public void isPalindrome() {
+        String str = "12321";
+        if (str == null) {
+            System.out.println(false);
+        }
+        StringBuilder strBuilder = new StringBuilder(str);
+        strBuilder.reverse();
+        System.out.println(strBuilder);
+        System.out.println(strBuilder.toString().equals(str));
+    }
 }
