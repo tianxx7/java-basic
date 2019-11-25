@@ -1,4 +1,4 @@
-package basic;
+package serializable;
 
 import org.junit.Test;
 
@@ -87,5 +87,35 @@ public class SerializableMain {
         ObjectInputStream in = new ObjectInputStream(byteIn);
         System.out.println(instance == in.readObject());
         in.close();
+    }
+
+    @Test
+    public void super_sub_serializable_test() throws IOException, ClassNotFoundException {
+        ByteArrayOutputStream byteOut = new ByteArrayOutputStream();
+        ObjectOutputStream outputStream = new ObjectOutputStream(byteOut);
+        Child1 child1 = new Child1();
+        outputStream.writeObject(child1);
+        outputStream.flush();
+        outputStream.close();
+
+        //重点
+        ByteArrayInputStream byteIn = new ByteArrayInputStream(byteOut.toByteArray());
+        ObjectInputStream inputStream = new ObjectInputStream(byteIn);
+        Child1 child11 = (Child1) inputStream.readObject();
+        System.out.println(child11);
+
+
+        ByteArrayOutputStream byteOut2 = new ByteArrayOutputStream();
+        ObjectOutputStream outputStream2 = new ObjectOutputStream(byteOut2);
+        Child2 child2 = new Child2();
+        outputStream2.writeObject(child2);
+        outputStream2.flush();
+        outputStream2.close();
+
+        //重点
+        ByteArrayInputStream byteIn2 = new ByteArrayInputStream(byteOut2.toByteArray());
+        ObjectInputStream inputStream2 = new ObjectInputStream(byteIn2);
+        Child2 child21 = (Child2) inputStream2.readObject();
+        System.out.println(child21);
     }
 }

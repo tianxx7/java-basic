@@ -1,4 +1,6 @@
-package basic;
+package serializable;
+
+import serializable.AdapterPerson;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
