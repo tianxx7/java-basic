@@ -1,5 +1,6 @@
-package collection;
+package clone;
 
+import serializable.InfoBean2;
 import org.junit.Test;
 
 import java.io.*;

@@ -1,4 +1,4 @@
-package collection;
+package clone;
 
 public class InfoBean implements Cloneable {
     private String name;
