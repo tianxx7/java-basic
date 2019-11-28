@@ -1,6 +1,8 @@
 package generic;
 
 import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.List;
 
 /*
  * 优雅创建泛型数组
