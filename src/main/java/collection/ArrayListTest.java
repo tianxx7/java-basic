@@ -5,6 +5,7 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Vector;
 
 /*
  * ArrayList测试
@@ -66,5 +67,65 @@ public class ArrayListTest {
         List<Integer> list3 = new ArrayList<>(Arrays.asList(array3));
         list3.add(4); // 3.可以正常
         //不可变结构的Arrays的ArrayList通过构造放入了真正的万能ArrayList
+    }
+
+    @Test
+    public void removeTest(){
+        ArrayList<String> list = new ArrayList<>();
+        list.add("java");
+        list.add("android");
+        list.add("android");
+        list.add("java");
+        list.add("c");
+        list.add("c++");
+        list.add("c");
+
+        //正确
+        for (int i = 0; i < list.size(); i++) {
+            String s = list.get(i);
+            if (s.equals("android")){
+                list.remove(s);
+            }
+        }
+        //原因是遍历删除的时候,后面的元素向前移动(System.copy),但是i一直向后,导致有些没有被遍历到
+        System.out.println(list.size());// 6 总共7个,漏删除一个,解决办法是倒序遍历
+        list.iterator();
+
+        //ConcurrentModificationException
+        //解决办法使用迭代器的remove方法
+        /*for (String s : list){
+            if (s.equals("android")){
+                list.remove(s);
+            }
+        }*/
+    }
+
+    /*
+    * Array.asList方法踩坑
+    * */
+    @Test
+    public void asList(){
+        int[] data = {1,2,3,4};
+        List<int[]> ints = Arrays.asList(data);
+        System.out.println(ints.size());//1
+        //asList接收的是一个类型为T的数组,基本类型不能作为泛型,所以这里参数a只能接收引用类型
+        //自然编译通过编译器就把上面的int[]数组当作一个引用参数,所以size为1
+        Integer[] integers = {1,2,3,4};
+        List<Integer> boxInt = Arrays.asList(integers);
+        System.out.println(boxInt.size());//4
+        boxInt.add(5);//这个抛出异常,Arrays.asList是个内部类ArrayList,没有实现add方法,
+        // 只实现了size,toArray,get,set,contains几个方法
+        //Arrays.asList返回的是一个不可变长度的列表
+    }
+
+    @Test
+    public void listEquals(){
+        ArrayList<String> strings = new ArrayList<>();
+        strings.add("android");
+        Vector<String> vector = new Vector<>();
+        vector.add("android");
+        System.out.println(strings.equals(vector));//true
+        //集合列表只关心数值的比较,其equals方法都是AbstractList中实现的
+        //比较的依据时通过迭代器遍历元素挨个equals比较,其他集合map,set同理
     }
 }
