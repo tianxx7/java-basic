@@ -2,10 +2,7 @@ package collection;
 
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Vector;
+import java.util.*;
 
 /*
  * ArrayList测试
@@ -118,6 +115,9 @@ public class ArrayListTest {
         //Arrays.asList返回的是一个不可变长度的列表
     }
 
+    /*
+    * list.equals
+    * */
     @Test
     public void listEquals(){
         ArrayList<String> strings = new ArrayList<>();
@@ -127,5 +127,66 @@ public class ArrayListTest {
         System.out.println(strings.equals(vector));//true
         //集合列表只关心数值的比较,其equals方法都是AbstractList中实现的
         //比较的依据时通过迭代器遍历元素挨个equals比较,其他集合map,set同理
+    }
+
+    /*
+    * list.subList
+    * */
+    @Test
+    public void subListTest(){
+        List<String> list = new ArrayList<>();
+        list.add("java");
+        list.add("android");
+
+        List<String> list1 = new ArrayList<>(list);
+
+        List<String> list2 = list.subList(0, list.size());
+        list2.add("unix c");//这一行注释掉,下面打印都是true
+
+        System.out.println(list.equals(list1));//false
+        System.out.println(list.equals(list2));//true
+
+        /*
+        * 因为通过构造函数创建的list1实质上新的列表,其内部是通过copyof
+        * 动作生成的,生成的列表与原列表没有任何关系(虽然是浅拷贝,但是由于
+        * 是String,可以理解成深拷贝),list2注释掉两个都是true,是因为subList相当于
+        * list的一个视图,
+        * subList产生的集合列表只是一个视图,所有修改操作都会作用与原集合列表上
+        * 所以修改list2就相当于修改了list集合
+        * */
+    }
+
+    @Test
+    public void subListTest2(){
+        List<String> list = new ArrayList<>();
+        list.add("java");
+        list.add("android");
+        List<String> subList = list.subList(0, list.size());
+
+        list.add("unix c");
+        System.out.println("list size = " + list.size());
+        System.out.println("subList size = " + subList.size());//ConcurrentModificationException
+        /*
+        * subList取出的列表只是原列表的视图,原数据集合修改
+        * 了后subList取出的子列表不会重新生成新列表,后面再对子列表操作时
+        * 就检测到计数器与预期不相符,就抛异常,
+        * 切记通过subList生成子列表后,就不要再操作原列表
+        * */
+    }
+
+    @Test
+    public void subListTest3(){
+        ArrayList<String> list = new ArrayList<>();
+        list.add("android");
+
+        ArrayList<String> subList =
+                (ArrayList<String>) list.subList(0,1);//ClassCastException
+        subList.add("unix");
+        /*
+        * subList返回的时ArrayList内部类SubList(继承AbstractList)
+        * 看起来都是List的实现,但是不是同一个子类
+        * 无法强转为ArrayList
+        * */
+        Collections.emptyList();
     }
 }
