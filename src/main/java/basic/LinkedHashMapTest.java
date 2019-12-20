@@ -6,6 +6,7 @@ import com.google.gson.GsonBuilder;
 import org.junit.Test;
 
 import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class LinkedHashMapTest {
     @Test
@@ -23,5 +24,18 @@ public class LinkedHashMapTest {
         Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();
         System.out.println(gson.toJson(linkedHashMap2));
 
+    }
+
+    //LRU
+    public class LRUCache<K,V> extends LinkedHashMap<K,V>{
+        private int maxEntries;
+        public LRUCache(int maxEntries){
+            this.maxEntries = maxEntries;
+        }
+
+        @Override
+        protected boolean removeEldestEntry(Map.Entry<K, V> eldest) {
+            return size()>maxEntries;
+        }
     }
 }
