@@ -7,9 +7,9 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-/*
+/**
  * 关于集合clone
- * */
+ */
 public class Copy {
     static ArrayList<InfoBean> srcList = new ArrayList<>();
     static ArrayList<InfoBean2> srcList2 = new ArrayList<>();
@@ -25,10 +25,11 @@ public class Copy {
         srcList2.add(new InfoBean2("100", 1));
     }
 
-    /*
-        浅clone  clone方法
-        是否重写clone不影响
-    */
+
+    /**
+     * 浅clone  clone方法
+     * 是否重写clone不影响
+     */
     @Test
     public void srcClone() {
         List<InfoBean> clone = (List<InfoBean>) srcList.clone();
@@ -38,10 +39,10 @@ public class Copy {
         }
     }
 
-    /*
+    /**
      * add浅复制
      * 是否重写不影响
-     * */
+     */
     @Test
     public void forClone() {
         ArrayList<InfoBean> destList = new ArrayList<>(srcList.size());
@@ -53,8 +54,8 @@ public class Copy {
         }
     }
 
-    /*
-     *addAll浅复制
+    /**
+     * addAll浅复制
      * 是否重写clone不影响
      * */
     @Test
@@ -66,10 +67,10 @@ public class Copy {
         }
     }
 
-    /*
+    /**
      * 构造方法浅clone
      * 是否重写clone不影响
-     * */
+     */
     @Test
     public void constructor() {
         ArrayList<InfoBean> destList = new ArrayList<>(srcList);
@@ -78,11 +79,11 @@ public class Copy {
         }
     }
 
-    /*
+    /**
      * system.copy 浅复制
      * InfoBean没有重写clone方法
      * 对于InfoBean是否重写clone方法,System.arratcopy都是浅复制
-     * */
+     */
     @Test
     public void sysCopy() {
         InfoBean[] srcBeans = srcList.toArray(new InfoBean[0]);
@@ -93,10 +94,10 @@ public class Copy {
         }
     }
 
-    /*
+    /**
      * InfoBean实现Cloneable接口,重写clone方法
-     *
-     * */
+     * @throws CloneNotSupportedException
+     */
     @Test
     public void deepClone() throws CloneNotSupportedException {
         List<InfoBean> destList = new ArrayList<>(srcList.size());
@@ -109,9 +110,11 @@ public class Copy {
         }
     }
 
-   /*
-     序列化深度clone
-   */
+    /**
+     * 序列化深度clone
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
     @Test
     public void deepClone2() throws IOException, ClassNotFoundException {
         ByteArrayOutputStream byteOut = new ByteArrayOutputStream();
