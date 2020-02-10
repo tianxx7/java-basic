@@ -1,4 +1,4 @@
-package dubbo.server;
+package dubbo.multicast;
 
 import com.alibaba.dubbo.common.URL;
 import com.alibaba.dubbo.config.ApplicationConfig;
@@ -22,9 +22,8 @@ public class SimpleSesrver {
         ApplicationConfig applicationConfig = new ApplicationConfig();
         applicationConfig.setName("app-server");
 
-        //连接注册中心
-        //空的注册中心
-        RegistryConfig registryConfig = new RegistryConfig(RegistryConfig.NO_AVAILABLE);
+        //组网广播控制中心
+        RegistryConfig registryConfig = new RegistryConfig("multicast://224.1.2.3:11111");
 
         //服务提供者协议配置
         ProtocolConfig protocolConfig = new ProtocolConfig();
