@@ -1,12 +1,12 @@
 package dubbo.multicast;
 
+import com.alibaba.dubbo.common.URL;
+import com.alibaba.dubbo.config.ApplicationConfig;
+import com.alibaba.dubbo.config.ProtocolConfig;
+import com.alibaba.dubbo.config.RegistryConfig;
+import com.alibaba.dubbo.config.ServiceConfig;
 import dubbo.common.UserService;
 import dubbo.common.UserServiceImpl;
-import org.apache.dubbo.common.URL;
-import org.apache.dubbo.config.ApplicationConfig;
-import org.apache.dubbo.config.ProtocolConfig;
-import org.apache.dubbo.config.RegistryConfig;
-import org.apache.dubbo.config.ServiceConfig;
 
 import java.io.IOException;
 import java.util.List;

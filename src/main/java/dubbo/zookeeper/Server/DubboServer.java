@@ -1,8 +1,8 @@
 package dubbo.zookeeper.Server;
 
+import com.alibaba.dubbo.common.URL;
 import com.alibaba.dubbo.config.ServiceConfig;
 import dubbo.common.UserServiceImpl;
-import org.apache.dubbo.common.URL;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.io.IOException;
