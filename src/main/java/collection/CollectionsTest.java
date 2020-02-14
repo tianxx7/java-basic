@@ -2,7 +2,9 @@ package collection;
 
 import org.junit.Test;
 
-import java.lang.reflect.Array;
+import java.lang.management.ManagementFactory;
+import java.lang.management.MemoryMXBean;
+import java.lang.management.MemoryUsage;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -12,9 +14,11 @@ public class CollectionsTest {
     /*
     * 集合工具类的排序方法
     * */
+
+    private  static List<Info> list = new ArrayList<>();
     @Test
     public void collections_sort(){
-        List<Info> list = new ArrayList<>();
+
         list.add(new Info("小渔村", 0756)); // 八进制
         list.add(new Info("珠海",0756));
 
@@ -30,6 +34,22 @@ public class CollectionsTest {
         int index1 = list.indexOf(info);
         int index2 = Collections.binarySearch(list,info);
         System.out.printf("index1 = " + index1 +"%nindex2 = " + index2);
+
+        /*
+        * -ea -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=target/outofmemory.dump -Xms20m -Xmx20m
+        * */
+        System.out.println("----------Memory--------");
+        MemoryMXBean memoryMXBean = ManagementFactory.getMemoryMXBean();
+        MemoryUsage usage = memoryMXBean.getHeapMemoryUsage();
+        System.out.println("初始化Heap：" + usage.getInit()/1024/1024 + "mb");
+        System.out.println("最大Heap：" + usage.getMax()/1024/1024 + "mb");
+        System.out.println("已使用Heap：" + usage.getUsed()/1024/1024 + "mb");
+        System.out.println("Heap Memory Usage：" + memoryMXBean.getHeapMemoryUsage());
+        System.out.println("Non-Heap Memory Usage: " + memoryMXBean.getNonHeapMemoryUsage());
+
+        for (int i = 0; i < 10000000; i++) {
+            list.add(new Info("珠海",0756));
+        }
         /*
         * index1 = 0
         * index2 = 1
